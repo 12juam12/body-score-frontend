@@ -9,6 +9,20 @@ export default function LoginPage() {
       <Link href="/resend-verification" className="text-sm underline">
         ¿No verificaste tu email? Reenviar verificación
       </Link>
+      <div className="flex flex-col items-center gap-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <span>
+          ¿Sos profesional?{" "}
+          <Link href="/register/professional" className="underline">
+            Registrate
+          </Link>
+        </span>
+        <span>
+          ¿Te rechazaron o te pidieron más info?{" "}
+          <Link href="/resubmit/professional" className="underline">
+            Reenviá tu solicitud
+          </Link>
+        </span>
+      </div>
     </div>
   );
 }
