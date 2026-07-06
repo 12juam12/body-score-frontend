@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { backendJson, BackendError } from "@/lib/backend";
 import type { PublicProfessionalProfile } from "@/lib/types";
 
@@ -43,6 +44,20 @@ export default async function PublicProfessionalPage({ params }: PublicProfessio
         </h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">@{profile.nickname}</p>
         {profile.description ? <p className="max-w-md">{profile.description}</p> : null}
+        <div className="flex gap-2">
+          <Link
+            href={`/register/patient?professionalId=${profile.professionalId}&nickname=${profile.nickname}`}
+            className="rounded bg-black px-4 py-2 text-sm text-white dark:bg-white dark:text-black"
+          >
+            Registrarme como paciente
+          </Link>
+          <Link
+            href={`/resubmit/patient?professionalId=${profile.professionalId}&nickname=${profile.nickname}`}
+            className="rounded border px-4 py-2 text-sm"
+          >
+            Reenviar mi solicitud
+          </Link>
+        </div>
       </div>
 
       <ul className="flex w-full max-w-sm flex-col gap-3">
