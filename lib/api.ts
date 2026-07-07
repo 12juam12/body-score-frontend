@@ -1,4 +1,4 @@
-import { backendFetch, backendJson, BackendError } from "./backend";
+import { backendFetch, backendFetchMultipart, backendJson, BackendError } from "./backend";
 import { getAccessToken } from "./session";
 
 export { BackendError };
@@ -18,6 +18,14 @@ export async function apiFetch(path: string, init?: RequestInit): Promise<Respon
       ...(await authHeaders()),
       ...init?.headers,
     },
+  });
+}
+
+export async function apiFetchMultipart(path: string, formData: FormData): Promise<Response> {
+  return backendFetchMultipart(path, {
+    method: "POST",
+    body: formData,
+    headers: await authHeaders(),
   });
 }
 

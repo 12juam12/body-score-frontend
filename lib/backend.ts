@@ -20,6 +20,15 @@ export async function backendFetch(path: string, init?: RequestInit): Promise<Re
   });
 }
 
+// No Content-Type header here on purpose: fetch() must set its own
+// multipart/form-data boundary when the body is a FormData instance.
+export async function backendFetchMultipart(path: string, init?: RequestInit): Promise<Response> {
+  return fetch(`${BACKEND_API_URL}${path}`, {
+    ...init,
+    cache: "no-store",
+  });
+}
+
 export async function backendJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await backendFetch(path, init);
 
