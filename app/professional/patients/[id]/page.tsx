@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { apiJson, BackendError } from "@/lib/api";
-import type { PatientDetail } from "@/lib/types";
+import type { PatientDetail, PatientReport } from "@/lib/types";
 import { ReviewActionForm } from "./ReviewActionForm";
 import { EditPatientForm } from "./EditPatientForm";
 
@@ -19,6 +20,17 @@ async function getPatient(id: string): Promise<PatientDetail | null> {
   }
 }
 
+async function getReports(id: string): Promise<PatientReport[]> {
+  try {
+    return await apiJson<PatientReport[]>(`/api/professionals/me/patients/${id}/reports`);
+  } catch (error) {
+    if (error instanceof BackendError && (error.status === 404 || error.status === 403)) {
+      return [];
+    }
+    throw error;
+  }
+}
+
 export default async function OwnPatientDetailPage({ params }: OwnPatientDetailPageProps) {
   const { id } = await params;
   const patient = await getPatient(id);
@@ -26,6 +38,8 @@ export default async function OwnPatientDetailPage({ params }: OwnPatientDetailP
   if (!patient) {
     notFound();
   }
+
+  const reports = await getReports(id);
 
   const isPending = patient.status === "PENDING" || patient.status === "INFO_REQUESTED";
 
@@ -49,6 +63,29 @@ export default async function OwnPatientDetailPage({ params }: OwnPatientDetailP
       ) : null}
 
       <EditPatientForm patient={patient} />
+
+      <div>
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="font-medium">Informes</h2>
+          <Link href={`/professional/patients/${patient.patientId}/reports/new`} className="text-sm underline">
+            + Crear informe
+          </Link>
+        </div>
+        {reports.length === 0 ? (
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">Todavía no hay informes cargados.</p>
+        ) : (
+          <ul className="flex flex-col gap-2 text-sm">
+            {reports.map((report) => (
+              <li key={report.id} className="border-b pb-2">
+                <Link href={`/professional/patients/${patient.patientId}/reports/${report.id}`} className="underline">
+                  {new Date(report.createdAt).toLocaleString()}
+                </Link>{" "}
+                — {report.weightKg} kg, {report.heightCm} cm, IMC {report.bmi.value} kg/m²
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <div>
         <h2 className="font-medium mb-2">Historial de revisión</h2>

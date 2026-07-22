@@ -7,6 +7,58 @@ export type ResubmitPatientFormState = {
   success?: boolean;
 };
 
+export type LookupPatientFormState = {
+  error?: string;
+  data?: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    nationalId: string;
+    healthInsurance: string;
+  };
+};
+
+export async function lookupPatientForResubmit(
+  _prevState: LookupPatientFormState,
+  formData: FormData,
+): Promise<LookupPatientFormState> {
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  if (typeof email !== "string" || typeof password !== "string" || !email || !password) {
+    return { error: "Ingresá tu email y contraseña" };
+  }
+
+  try {
+    const details = await backendJson<{
+      firstName: string;
+      lastName: string;
+      nationalId: string;
+      healthInsurance: string | null;
+    }>("/api/patients/resubmit/lookup", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
+
+    return {
+      data: {
+        email,
+        password,
+        firstName: details.firstName,
+        lastName: details.lastName,
+        nationalId: details.nationalId,
+        healthInsurance: details.healthInsurance ?? "",
+      },
+    };
+  } catch (error) {
+    if (error instanceof BackendError) {
+      return { error: error.message };
+    }
+    return { error: "No se pudo conectar con el servidor" };
+  }
+}
+
 export async function resubmitPatient(
   _prevState: ResubmitPatientFormState,
   formData: FormData,

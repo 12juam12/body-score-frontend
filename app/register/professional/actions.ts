@@ -1,10 +1,11 @@
 "use server";
 
-import { backendJson, BackendError } from "@/lib/backend";
+import { backendFetchMultipart, backendJson, BackendError } from "@/lib/backend";
 
 export type RegisterProfessionalFormState = {
   error?: string;
   success?: boolean;
+  warning?: string;
 };
 
 export async function registerProfessional(
@@ -18,6 +19,8 @@ export async function registerProfessional(
   const lastName = formData.get("lastName");
   const nationalId = formData.get("nationalId");
   const description = formData.get("description");
+  const documentType = formData.get("documentType");
+  const documentFile = formData.get("documentFile");
 
   if (
     typeof email !== "string" ||
@@ -54,6 +57,33 @@ export async function registerProfessional(
       return { error: error.message };
     }
     return { error: "No se pudo conectar con el servidor" };
+  }
+
+  if (documentFile instanceof File && documentFile.size > 0) {
+    const documentFormData = new FormData();
+    documentFormData.append("email", email);
+    documentFormData.append("password", password);
+    documentFormData.append("type", typeof documentType === "string" && documentType ? documentType : "OTHER");
+    documentFormData.append("file", documentFile, documentFile.name);
+
+    try {
+      const response = await backendFetchMultipart("/api/professionals/documents", {
+        method: "POST",
+        body: documentFormData,
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        return {
+          success: true,
+          warning: `Tu cuenta se creó, pero no se pudo subir el documento (${body?.message ?? "error desconocido"}). Podés subirlo más adelante desde tu perfil una vez aprobado.`,
+        };
+      }
+    } catch {
+      return {
+        success: true,
+        warning: "Tu cuenta se creó, pero no se pudo subir el documento por un problema de conexión. Podés subirlo más adelante desde tu perfil una vez aprobado.",
+      };
+    }
   }
 
   return { success: true };

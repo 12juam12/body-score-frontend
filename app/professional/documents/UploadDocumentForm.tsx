@@ -1,11 +1,10 @@
 "use client";
 
 import { useActionState, useRef } from "react";
+import { PROFESSIONAL_DOCUMENT_TYPES } from "@/lib/types";
 import { uploadDocument, type UploadDocumentFormState } from "./actions";
 
 const initialState: UploadDocumentFormState = {};
-
-const DOCUMENT_TYPES = ["DNI", "UNIVERSITY_DEGREE", "SPECIALTY_CERTIFICATE", "OTHER"];
 
 export function UploadDocumentForm() {
   const [state, formAction, isPending] = useActionState(uploadDocument, initialState);
@@ -22,7 +21,7 @@ export function UploadDocumentForm() {
     >
       <h2 className="font-medium">Subir documento</h2>
       <select name="type" required className="border rounded px-2 py-1">
-        {DOCUMENT_TYPES.map((type) => (
+        {PROFESSIONAL_DOCUMENT_TYPES.map((type) => (
           <option key={type} value={type}>
             {type}
           </option>

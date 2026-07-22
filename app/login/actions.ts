@@ -9,6 +9,26 @@ export type LoginFormState = {
   error?: string;
 };
 
+function translateLoginError(message: string): string {
+  if (message === "Invalid email or password") {
+    return "Email o contraseña incorrectos";
+  }
+
+  const statusMatch = /status (\w+)$/.exec(message);
+  switch (statusMatch?.[1]) {
+    case "PENDING":
+      return "Todavía no verificaste tu email. Usá el link de reenvío de verificación debajo.";
+    case "INFO_REQUESTED":
+      return "Te pidieron información adicional. Usá el link de reenvío de solicitud debajo.";
+    case "REJECTED":
+      return "Tu solicitud fue rechazada. Usá el link de reenvío de solicitud debajo.";
+    case "SUSPENDED":
+      return "Tu cuenta está suspendida. Contactá al equipo de bodyScore.";
+    default:
+      return message;
+  }
+}
+
 type LoginResponse = {
   accessToken: string;
   refreshToken: string;
@@ -31,7 +51,7 @@ export async function login(_prevState: LoginFormState, formData: FormData): Pro
     });
   } catch (error) {
     if (error instanceof BackendError) {
-      return { error: error.message };
+      return { error: translateLoginError(error.message) };
     }
     return { error: "No se pudo conectar con el servidor" };
   }

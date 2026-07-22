@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { PROFESSIONAL_DOCUMENT_TYPES } from "@/lib/types";
 import { registerProfessional, type RegisterProfessionalFormState } from "./actions";
 
 const initialState: RegisterProfessionalFormState = {};
@@ -10,9 +11,12 @@ export function RegisterProfessionalForm() {
 
   if (state.success) {
     return (
-      <p className="max-w-md text-center text-sm text-zinc-600 dark:text-zinc-400">
-        Tu solicitud fue enviada. Te vamos a avisar por email cuando el superadmin la revise.
-      </p>
+      <div className="max-w-md text-center text-sm">
+        <p className="text-zinc-600 dark:text-zinc-400">
+          Tu solicitud fue enviada. Te vamos a avisar por email cuando el superadmin la revise.
+        </p>
+        {state.warning ? <p className="mt-2 text-amber-600">{state.warning}</p> : null}
+      </div>
     );
   }
 
@@ -74,6 +78,22 @@ export function RegisterProfessionalForm() {
           Descripción (opcional)
         </label>
         <textarea id="description" name="description" rows={3} className="border rounded px-3 py-2" />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="documentType" className="text-sm font-medium">
+          Documento de acreditación (opcional)
+        </label>
+        <select id="documentType" name="documentType" defaultValue="UNIVERSITY_DEGREE" className="border rounded px-3 py-2">
+          {PROFESSIONAL_DOCUMENT_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+        <input id="documentFile" name="documentFile" type="file" className="border rounded px-3 py-2" />
+        <p className="text-xs text-zinc-500">
+          Podés subir tu matrícula u otro documento ahora, o más adelante si te lo piden.
+        </p>
       </div>
       {state.error ? <p className="text-sm text-red-600">{state.error}</p> : null}
       <button type="submit" disabled={isPending} className="rounded bg-black text-white py-2 disabled:opacity-50">

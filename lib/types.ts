@@ -35,6 +35,8 @@ export type PublicProfessionalProfile = {
 
 export type UserStatus = "PENDING" | "INFO_REQUESTED" | "APPROVED" | "REJECTED" | "SUSPENDED";
 
+export const PROFESSIONAL_DOCUMENT_TYPES = ["DNI", "UNIVERSITY_DEGREE", "SPECIALTY_CERTIFICATE", "OTHER"] as const;
+
 export type ProfessionalListItem = {
   professionalId: number;
   userId: number;
@@ -98,4 +100,44 @@ export type PatientDetail = {
   status: UserStatus;
   linkedProfessionalIds: number[];
   reviewHistory: ReviewHistoryEntry[];
+};
+
+export const PATIENT_SEXES = ["MALE", "FEMALE"] as const;
+
+export const PHYSICAL_ACTIVITY_LEVELS = ["SEDENTARY", "ACTIVE", "VERY_ACTIVE"] as const;
+
+export const BMI_CATEGORIES = [
+  "VERY_LOW_WEIGHT",
+  "SEVERE_LOW_WEIGHT",
+  "MODERATE_LOW_WEIGHT",
+  "NORMAL",
+  "OVERWEIGHT",
+  "OBESITY_I",
+  "OBESITY_II",
+  "OBESITY_III",
+] as const;
+
+export type BmiCategory = (typeof BMI_CATEGORIES)[number];
+
+export type BodyMassIndex = {
+  value: number;
+  category: BmiCategory;
+};
+
+export type PatientReport = {
+  id: number;
+  patientId: number;
+  heightCm: number;
+  weightKg: number;
+  bodyFatPercentage: number;
+  visceralFatPercentage: number;
+  muscleMassPercentage: number;
+  basalMetabolicRateKcal: number;
+  age: number;
+  sex: (typeof PATIENT_SEXES)[number];
+  waistHipRatio: number;
+  physicalActivityLevel: (typeof PHYSICAL_ACTIVITY_LEVELS)[number] | null;
+  boneMassPercentage: number | null;
+  createdAt: string;
+  bmi: BodyMassIndex;
 };
