@@ -104,6 +104,8 @@ export type PatientDetail = {
 
 export const PATIENT_SEXES = ["MALE", "FEMALE"] as const;
 
+export type PatientSex = (typeof PATIENT_SEXES)[number];
+
 export const PHYSICAL_ACTIVITY_LEVELS = ["SEDENTARY", "ACTIVE", "VERY_ACTIVE"] as const;
 
 export const BMI_CATEGORIES = [
@@ -141,6 +143,19 @@ export type ExpectedBodyFatMassRange = {
   differenceKg: number;
 };
 
+export type FatFreeMass = {
+  valueKg: number;
+};
+
+export const WAIST_HIP_RISK_LEVELS = ["LOW", "MODERATE", "HIGH"] as const;
+
+export type WaistHipRiskLevel = (typeof WAIST_HIP_RISK_LEVELS)[number];
+
+export type WaistHipRatio = {
+  value: number;
+  riskLevel: WaistHipRiskLevel;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -152,11 +167,14 @@ export type PatientReport = {
   basalMetabolicRateKcal: number;
   age: number;
   sex: (typeof PATIENT_SEXES)[number];
-  waistHipRatio: number;
+  waistCm: number;
+  hipCm: number;
   physicalActivityLevel: (typeof PHYSICAL_ACTIVITY_LEVELS)[number] | null;
   boneMassPercentage: number | null;
   createdAt: string;
   bmi: BodyMassIndex;
   bodyFatMass: BodyFatMass;
   expectedBodyFatMassRange: ExpectedBodyFatMassRange;
+  fatFreeMass: FatFreeMass;
+  waistHipRatio: WaistHipRatio;
 };

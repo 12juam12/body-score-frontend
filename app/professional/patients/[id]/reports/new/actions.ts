@@ -29,7 +29,8 @@ export async function createPatientReport(
   const basalMetabolicRateKcal = parseRequiredNumber(formData.get("basalMetabolicRateKcal"));
   const age = parseRequiredNumber(formData.get("age"));
   const sex = formData.get("sex");
-  const waistHipRatio = parseRequiredNumber(formData.get("waistHipRatio"));
+  const waistCm = parseRequiredNumber(formData.get("waistCm"));
+  const hipCm = parseRequiredNumber(formData.get("hipCm"));
   const physicalActivityLevel = formData.get("physicalActivityLevel");
   const boneMassPercentage = parseRequiredNumber(formData.get("boneMassPercentage"));
 
@@ -43,7 +44,8 @@ export async function createPatientReport(
     age === null ||
     typeof sex !== "string" ||
     !sex ||
-    waistHipRatio === null
+    waistCm === null ||
+    hipCm === null
   ) {
     return { error: "Completá todos los campos obligatorios" };
   }
@@ -60,7 +62,8 @@ export async function createPatientReport(
         basalMetabolicRateKcal,
         age,
         sex,
-        waistHipRatio,
+        waistCm,
+        hipCm,
         physicalActivityLevel:
           typeof physicalActivityLevel === "string" && physicalActivityLevel ? physicalActivityLevel : undefined,
         boneMassPercentage: boneMassPercentage ?? undefined,

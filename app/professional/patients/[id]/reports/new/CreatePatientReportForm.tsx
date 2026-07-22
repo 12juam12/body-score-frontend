@@ -124,18 +124,19 @@ export function CreatePatientReportForm({ patientId }: CreatePatientReportFormPr
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="waistHipRatio" className="text-sm font-medium">
-          Relación cintura/cadera
-        </label>
-        <input
-          id="waistHipRatio"
-          name="waistHipRatio"
-          type="number"
-          step="0.01"
-          required
-          className="border rounded px-3 py-2"
-        />
+      <div className="flex gap-2">
+        <div className="flex flex-1 flex-col gap-1">
+          <label htmlFor="waistCm" className="text-sm font-medium">
+            Circunferencia de cintura (cm)
+          </label>
+          <input id="waistCm" name="waistCm" type="number" step="0.1" required className="border rounded px-3 py-2" />
+        </div>
+        <div className="flex flex-1 flex-col gap-1">
+          <label htmlFor="hipCm" className="text-sm font-medium">
+            Circunferencia de cadera (cm)
+          </label>
+          <input id="hipCm" name="hipCm" type="number" step="0.1" required className="border rounded px-3 py-2" />
+        </div>
       </div>
 
       <div className="flex gap-2">
