@@ -25,21 +25,27 @@ export function MetricCard({ metric }: MetricCardProps) {
             {metric.value} <span className="text-sm font-normal text-muted">{metric.unit}</span>
           </p>
         </div>
-        <span
-          className="shrink-0 rounded-full px-3 py-1 text-xs font-medium text-white"
-          style={{ background: metric.color }}
-        >
-          {metric.categoryLabel}
-        </span>
+        {metric.categoryLabel && metric.color ? (
+          <span
+            className="shrink-0 rounded-full px-3 py-1 text-xs font-medium text-white"
+            style={{ background: metric.color }}
+          >
+            {metric.categoryLabel}
+          </span>
+        ) : null}
       </div>
 
-      <div className="mt-5">
-        <MetricGauge zones={metric.zones} scaleMin={metric.scaleMin} scaleMax={metric.scaleMax} value={metric.value} />
-      </div>
+      {metric.zones && metric.scaleMin !== undefined && metric.scaleMax !== undefined ? (
+        <div className="mt-5">
+          <MetricGauge zones={metric.zones} scaleMin={metric.scaleMin} scaleMax={metric.scaleMax} value={metric.value} />
+        </div>
+      ) : null}
 
       <div className="mt-5 space-y-3 text-sm">
         <p className="whitespace-pre-line text-foreground/80">{metric.interpretation}</p>
-        <p className="rounded-xl bg-primary-soft px-3 py-2 text-primary-dark">{metric.recommendation}</p>
+        {metric.recommendation ? (
+          <p className="rounded-xl bg-primary-soft px-3 py-2 text-primary-dark">{metric.recommendation}</p>
+        ) : null}
       </div>
 
       <details className="mt-4 text-xs text-muted">

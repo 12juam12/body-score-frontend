@@ -124,6 +124,23 @@ export type BodyMassIndex = {
   category: BmiCategory;
 };
 
+export type BodyFatMass = {
+  valueKg: number;
+};
+
+export const BODY_FAT_MASS_RANGE_STATUSES = ["BELOW_RANGE", "WITHIN_RANGE", "ABOVE_RANGE"] as const;
+
+export type BodyFatMassRangeStatus = (typeof BODY_FAT_MASS_RANGE_STATUSES)[number];
+
+export type ExpectedBodyFatMassRange = {
+  minKg: number;
+  maxKg: number;
+  minPercentage: number;
+  maxPercentage: number;
+  status: BodyFatMassRangeStatus;
+  differenceKg: number;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -140,4 +157,6 @@ export type PatientReport = {
   boneMassPercentage: number | null;
   createdAt: string;
   bmi: BodyMassIndex;
+  bodyFatMass: BodyFatMass;
+  expectedBodyFatMassRange: ExpectedBodyFatMassRange;
 };

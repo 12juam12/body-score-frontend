@@ -3,7 +3,10 @@ import { notFound } from "next/navigation";
 import { apiJson, BackendError } from "@/lib/api";
 import type { PatientReport } from "@/lib/types";
 import { buildBmiPresentation } from "@/lib/metrics/bmi";
+import { buildBodyFatMassPresentation } from "@/lib/metrics/bodyFatMass";
+import { buildExpectedBodyFatMassPresentation } from "@/lib/metrics/expectedBodyFatMass";
 import { MetricCard } from "@/components/reports/MetricCard";
+import { RangeMetricCard } from "@/components/reports/RangeMetricCard";
 
 type PatientReportDetailPageProps = {
   params: Promise<{ id: string; reportId: string }>;
@@ -34,6 +37,11 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
   }
 
   const bmiPresentation = buildBmiPresentation(report.bmi, report.weightKg, report.heightCm);
+  const bodyFatMassPresentation = buildBodyFatMassPresentation(report.bodyFatMass, report.weightKg, report.bodyFatPercentage);
+  const expectedBodyFatMassPresentation = buildExpectedBodyFatMassPresentation(
+    report.expectedBodyFatMassRange,
+    report.bodyFatMass.valueKg,
+  );
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -49,6 +57,8 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
 
       <div className="grid gap-4">
         <MetricCard metric={bmiPresentation} />
+        <MetricCard metric={bodyFatMassPresentation} />
+        <RangeMetricCard metric={expectedBodyFatMassPresentation} />
       </div>
     </div>
   );
