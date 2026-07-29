@@ -156,6 +156,23 @@ export type WaistHipRatio = {
   riskLevel: WaistHipRiskLevel;
 };
 
+export const BASAL_METABOLIC_RATE_STATUSES = [
+  "FAR_BELOW",
+  "SLIGHTLY_BELOW",
+  "WITHIN_RANGE",
+  "SLIGHTLY_ABOVE",
+  "FAR_ABOVE",
+] as const;
+
+export type BasalMetabolicRateStatus = (typeof BASAL_METABOLIC_RATE_STATUSES)[number];
+
+export type BasalMetabolicRate = {
+  estimatedKcal: number;
+  measuredKcal: number;
+  percentage: number;
+  status: BasalMetabolicRateStatus;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -177,4 +194,5 @@ export type PatientReport = {
   expectedBodyFatMassRange: ExpectedBodyFatMassRange;
   fatFreeMass: FatFreeMass;
   waistHipRatio: WaistHipRatio;
+  basalMetabolicRate: BasalMetabolicRate;
 };

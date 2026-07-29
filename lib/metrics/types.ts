@@ -15,10 +15,6 @@ export type MetricPresentation = {
   title: string;
   unit: string;
   value: number;
-  // A classification badge + gauge are only shown when a metric can be
-  // classified on its own (e.g. IMC). Metrics whose interpretation depends
-  // on another metric (e.g. body fat mass depends on the expected range)
-  // omit these and render as a plain value + interpretation card.
   categoryLabel?: string;
   color?: string;
   zones?: MetricZone[];
@@ -32,6 +28,7 @@ export type MetricPresentation = {
 
 export type MetricRangePresentation = {
   title: string;
+  subtitle?: string;
   unit: string;
   actualValue: number;
   minValue: number;
@@ -39,6 +36,9 @@ export type MetricRangePresentation = {
   statusLabel: string;
   color: string;
   differenceLabel: string;
+  actualLabel?: string;
+  rangeLabel?: string;
+  differenceStatLabel?: string;
   zones: MetricZone[];
   scaleMin: number;
   scaleMax: number;
