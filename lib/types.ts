@@ -173,6 +173,15 @@ export type BasalMetabolicRate = {
   status: BasalMetabolicRateStatus;
 };
 
+export const VISCERAL_FAT_LEVELS = ["NORMAL", "ELEVATED", "VERY_ELEVATED"] as const;
+
+export type VisceralFatLevel = (typeof VISCERAL_FAT_LEVELS)[number];
+
+export type VisceralFat = {
+  level: number;
+  status: VisceralFatLevel;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -195,4 +204,5 @@ export type PatientReport = {
   fatFreeMass: FatFreeMass;
   waistHipRatio: WaistHipRatio;
   basalMetabolicRate: BasalMetabolicRate;
+  visceralFat: VisceralFat;
 };

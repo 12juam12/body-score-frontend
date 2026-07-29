@@ -37,7 +37,23 @@ export function MetricCard({ metric }: MetricCardProps) {
 
       {metric.zones && metric.scaleMin !== undefined && metric.scaleMax !== undefined ? (
         <div className="mt-5">
-          <MetricGauge zones={metric.zones} scaleMin={metric.scaleMin} scaleMax={metric.scaleMax} value={metric.value} />
+          <MetricGauge
+            zones={metric.zones}
+            scaleMin={metric.scaleMin}
+            scaleMax={metric.scaleMax}
+            value={metric.value}
+            smooth={metric.gaugeSmooth}
+          />
+        </div>
+      ) : null}
+
+      {metric.warning ? (
+        <div className="mt-4 flex gap-2 rounded-xl border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-900 dark:border-red-900 dark:bg-red-950 dark:text-red-100">
+          <span aria-hidden>⚠</span>
+          <div>
+            <p className="font-medium">{metric.warning.title}</p>
+            <p className="mt-0.5 text-red-800 dark:text-red-200">{metric.warning.message}</p>
+          </div>
         </div>
       ) : null}
 

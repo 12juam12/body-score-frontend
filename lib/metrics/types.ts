@@ -11,6 +11,11 @@ export type MetricTechnicalDetail = {
   value: string;
 };
 
+export type MetricWarning = {
+  title: string;
+  message: string;
+};
+
 export type MetricPresentation = {
   title: string;
   unit: string;
@@ -20,6 +25,8 @@ export type MetricPresentation = {
   zones?: MetricZone[];
   scaleMin?: number;
   scaleMax?: number;
+  gaugeSmooth?: boolean;
+  warning?: MetricWarning;
   interpretation: string;
   recommendation?: string;
   technicalDetails: MetricTechnicalDetail[];

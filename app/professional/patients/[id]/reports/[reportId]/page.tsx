@@ -8,6 +8,7 @@ import { buildExpectedBodyFatMassPresentation } from "@/lib/metrics/expectedBody
 import { buildFatFreeMassPresentation } from "@/lib/metrics/fatFreeMass";
 import { buildWaistHipRatioPresentation } from "@/lib/metrics/waistHipRatio";
 import { buildBasalMetabolicRatePresentation } from "@/lib/metrics/basalMetabolicRate";
+import { buildVisceralFatPresentation } from "@/lib/metrics/visceralFat";
 import { MetricCard } from "@/components/reports/MetricCard";
 import { RangeMetricCard } from "@/components/reports/RangeMetricCard";
 import { CompositionMetricCard } from "@/components/reports/CompositionMetricCard";
@@ -59,6 +60,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
     report.heightCm,
     report.age,
   );
+  const visceralFatPresentation = buildVisceralFatPresentation(report.visceralFat);
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -79,6 +81,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
         <CompositionMetricCard metric={fatFreeMassPresentation} />
         <MetricCard metric={waistHipRatioPresentation} />
         <RangeMetricCard metric={basalMetabolicRatePresentation} />
+        <MetricCard metric={visceralFatPresentation} />
       </div>
     </div>
   );
