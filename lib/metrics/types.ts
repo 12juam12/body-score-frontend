@@ -33,6 +33,31 @@ export type MetricPresentation = {
   tooltip: string;
 };
 
+export type TargetWeightStep = {
+  label: string;
+  value: string;
+};
+
+export type TargetWeightPresentation = {
+  title: string;
+  subtitle: string;
+  currentWeightKg: number;
+  targetWeightKg: number;
+  currentLabel: string;
+  targetLabel: string;
+  currentColor: string;
+  targetColor: string;
+  scaleMin: number;
+  scaleMax: number;
+  statusLabel: string;
+  differenceMessage: string;
+  steps: TargetWeightStep[];
+  interpretation: string;
+  recommendation: string;
+  technicalDetails: MetricTechnicalDetail[];
+  tooltip: string;
+};
+
 export type MetricRangePresentation = {
   title: string;
   subtitle?: string;

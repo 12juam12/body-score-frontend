@@ -182,6 +182,17 @@ export type VisceralFat = {
   status: VisceralFatLevel;
 };
 
+export const TARGET_WEIGHT_STATUSES = ["ABOVE_TARGET", "NEAR_TARGET", "BELOW_TARGET"] as const;
+
+export type TargetWeightStatus = (typeof TARGET_WEIGHT_STATUSES)[number];
+
+export type TargetWeight = {
+  targetWeightKg: number;
+  targetFatPercentage: number;
+  differenceKg: number;
+  status: TargetWeightStatus;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -205,4 +216,5 @@ export type PatientReport = {
   waistHipRatio: WaistHipRatio;
   basalMetabolicRate: BasalMetabolicRate;
   visceralFat: VisceralFat;
+  targetWeight: TargetWeight;
 };
