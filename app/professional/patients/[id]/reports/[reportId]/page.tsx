@@ -10,10 +10,12 @@ import { buildWaistHipRatioPresentation } from "@/lib/metrics/waistHipRatio";
 import { buildBasalMetabolicRatePresentation } from "@/lib/metrics/basalMetabolicRate";
 import { buildVisceralFatPresentation } from "@/lib/metrics/visceralFat";
 import { buildBodyCompositionGoalPresentation } from "@/lib/metrics/bodyCompositionGoal";
+import { buildMuscleGoalPresentation } from "@/lib/metrics/muscleGoal";
 import { MetricCard } from "@/components/reports/MetricCard";
 import { RangeMetricCard } from "@/components/reports/RangeMetricCard";
 import { CompositionMetricCard } from "@/components/reports/CompositionMetricCard";
 import { BodyCompositionGoalCard } from "@/components/reports/BodyCompositionGoalCard";
+import { MuscleGoalCard } from "@/components/reports/MuscleGoalCard";
 
 type PatientReportDetailPageProps = {
   params: Promise<{ id: string; reportId: string }>;
@@ -64,6 +66,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
   );
   const visceralFatPresentation = buildVisceralFatPresentation(report.visceralFat);
   const bodyCompositionGoalPresentation = buildBodyCompositionGoalPresentation(report.bodyCompositionGoal);
+  const muscleGoalPresentation = buildMuscleGoalPresentation(report.muscleGoal, report.fatFreeMass.valueKg);
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -86,6 +89,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
         <RangeMetricCard metric={basalMetabolicRatePresentation} />
         <MetricCard metric={visceralFatPresentation} />
         <BodyCompositionGoalCard metric={bodyCompositionGoalPresentation} />
+        <MuscleGoalCard metric={muscleGoalPresentation} />
       </div>
     </div>
   );

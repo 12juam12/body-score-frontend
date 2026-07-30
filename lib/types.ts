@@ -199,6 +199,17 @@ export type BodyCompositionGoal = {
   status: BodyCompositionGoalStatus;
 };
 
+export const MUSCLE_GOAL_STATUSES = ["INCREASE", "MAINTAIN"] as const;
+
+export type MuscleGoalStatus = (typeof MUSCLE_GOAL_STATUSES)[number];
+
+export type MuscleGoal = {
+  currentMuscleMassKg: number;
+  targetMuscleMassKg: number;
+  increaseNeededKg: number;
+  status: MuscleGoalStatus;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -223,4 +234,5 @@ export type PatientReport = {
   basalMetabolicRate: BasalMetabolicRate;
   visceralFat: VisceralFat;
   bodyCompositionGoal: BodyCompositionGoal;
+  muscleGoal: MuscleGoal;
 };

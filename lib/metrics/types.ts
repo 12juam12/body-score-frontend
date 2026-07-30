@@ -67,6 +67,39 @@ export type BodyCompositionGoalPresentation = {
   tooltip: string;
 };
 
+export type MuscleGoalStat = {
+  label: string;
+  value: string;
+};
+
+export type MuscleGoalComparisonRow = {
+  label: string;
+  actual: string;
+  reference: string;
+  change: string;
+};
+
+export type MuscleGoalPresentation = {
+  title: string;
+  statusLabel: string;
+  color: string;
+  goalHeadline: string;
+  goalSubtext: string | null;
+  stats: MuscleGoalStat[];
+  interpretationHighlight: string;
+  interpretationBody: string;
+  recommendation: string;
+  currentValue: number;
+  referenceValue: number;
+  markerColor: string;
+  zones: MetricZone[];
+  scaleMin: number;
+  scaleMax: number;
+  comparisonRows: MuscleGoalComparisonRow[];
+  technicalDetails: MetricTechnicalDetail[];
+  tooltip: string;
+};
+
 export type MetricRangePresentation = {
   title: string;
   subtitle?: string;
