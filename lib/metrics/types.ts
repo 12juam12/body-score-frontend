@@ -33,27 +33,36 @@ export type MetricPresentation = {
   tooltip: string;
 };
 
-export type TargetWeightStep = {
+export type BodyCompositionGoalStat = {
   label: string;
   value: string;
 };
 
-export type TargetWeightPresentation = {
+export type BodyCompositionGoalComposition = {
+  fatFreeMassKg: number;
+  fatFreePercentage: number;
+  fatMassKg: number;
+  fatPercentage: number;
+};
+
+export type BodyCompositionGoalComparisonRow = {
+  label: string;
+  actual: string;
+  target: string;
+  change: string;
+};
+
+export type BodyCompositionGoalPresentation = {
   title: string;
-  subtitle: string;
-  currentWeightKg: number;
-  targetWeightKg: number;
-  currentLabel: string;
-  targetLabel: string;
-  currentColor: string;
-  targetColor: string;
-  scaleMin: number;
-  scaleMax: number;
   statusLabel: string;
-  differenceMessage: string;
-  steps: TargetWeightStep[];
-  interpretation: string;
-  recommendation: string;
+  color: string;
+  message: string;
+  stats: BodyCompositionGoalStat[];
+  current: BodyCompositionGoalComposition;
+  target: BodyCompositionGoalComposition;
+  comparisonRows: BodyCompositionGoalComparisonRow[];
+  comparisonNote: string;
+  clinicalNote: string;
   technicalDetails: MetricTechnicalDetail[];
   tooltip: string;
 };

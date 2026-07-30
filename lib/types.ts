@@ -182,15 +182,21 @@ export type VisceralFat = {
   status: VisceralFatLevel;
 };
 
-export const TARGET_WEIGHT_STATUSES = ["ABOVE_TARGET", "NEAR_TARGET", "BELOW_TARGET"] as const;
+export const BODY_COMPOSITION_GOAL_STATUSES = ["REDUCE", "MAINTAIN", "INCREASE"] as const;
 
-export type TargetWeightStatus = (typeof TARGET_WEIGHT_STATUSES)[number];
+export type BodyCompositionGoalStatus = (typeof BODY_COMPOSITION_GOAL_STATUSES)[number];
 
-export type TargetWeight = {
+export type BodyCompositionGoal = {
+  currentWeightKg: number;
   targetWeightKg: number;
+  weightDifferenceKg: number;
+  currentFatMassKg: number;
+  targetFatMassKg: number;
+  fatControlKg: number;
+  fatFreeMassKg: number;
+  currentFatPercentage: number;
   targetFatPercentage: number;
-  differenceKg: number;
-  status: TargetWeightStatus;
+  status: BodyCompositionGoalStatus;
 };
 
 export type PatientReport = {
@@ -216,5 +222,5 @@ export type PatientReport = {
   waistHipRatio: WaistHipRatio;
   basalMetabolicRate: BasalMetabolicRate;
   visceralFat: VisceralFat;
-  targetWeight: TargetWeight;
+  bodyCompositionGoal: BodyCompositionGoal;
 };
