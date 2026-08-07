@@ -12,11 +12,20 @@ import { buildVisceralFatPresentation } from "@/lib/metrics/visceralFat";
 import { buildBodyCompositionGoalPresentation } from "@/lib/metrics/bodyCompositionGoal";
 import { buildMuscleGoalPresentation } from "@/lib/metrics/muscleGoal";
 import { buildBodyWaterPresentation } from "@/lib/metrics/bodyWater";
+import { buildIdealWeightRangePresentation } from "@/lib/metrics/idealWeightRange";
+import { buildWeightComparisonPresentation } from "@/lib/metrics/weightComparison";
+import { buildMetabolicRiskPresentation } from "@/lib/metrics/metabolicRisk";
+import { buildEvolutionProjectionPresentation } from "@/lib/metrics/evolutionProjection";
+import { buildEvolutionHistoryPresentation } from "@/lib/metrics/evolutionHistory";
 import { MetricCard } from "@/components/reports/MetricCard";
 import { RangeMetricCard } from "@/components/reports/RangeMetricCard";
 import { CompositionMetricCard } from "@/components/reports/CompositionMetricCard";
 import { BodyCompositionGoalCard } from "@/components/reports/BodyCompositionGoalCard";
 import { MuscleGoalCard } from "@/components/reports/MuscleGoalCard";
+import { WeightComparisonCard } from "@/components/reports/WeightComparisonCard";
+import { MetabolicRiskCard } from "@/components/reports/MetabolicRiskCard";
+import { EvolutionProjectionCard } from "@/components/reports/EvolutionProjectionCard";
+import { EvolutionHistoryChart } from "@/components/reports/EvolutionHistoryChart";
 
 type PatientReportDetailPageProps = {
   params: Promise<{ id: string; reportId: string }>;
@@ -38,6 +47,10 @@ async function getReport(patientId: string, reportId: string): Promise<PatientRe
   }
 }
 
+async function getReports(patientId: string): Promise<PatientReport[]> {
+  return await apiJson<PatientReport[]>(`/api/professionals/me/patients/${patientId}/reports`);
+}
+
 export default async function PatientReportDetailPage({ params }: PatientReportDetailPageProps) {
   const { id, reportId } = await params;
   const report = await getReport(id, reportId);
@@ -45,6 +58,8 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
   if (!report) {
     notFound();
   }
+
+  const reports = await getReports(id);
 
   const bmiPresentation = buildBmiPresentation(report.bmi, report.weightKg, report.heightCm);
   const bodyFatMassPresentation = buildBodyFatMassPresentation(report.bodyFatMass, report.weightKg, report.bodyFatPercentage);
@@ -69,6 +84,22 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
   const bodyCompositionGoalPresentation = buildBodyCompositionGoalPresentation(report.bodyCompositionGoal);
   const muscleGoalPresentation = buildMuscleGoalPresentation(report.muscleGoal, report.fatFreeMass.valueKg);
   const bodyWaterPresentation = buildBodyWaterPresentation(report.bodyWater);
+  const idealWeightRangePresentation = buildIdealWeightRangePresentation(
+    report.idealWeightRange,
+    report.weightKg,
+    report.heightCm,
+    report.bodyCompositionGoal.targetWeightKg,
+  );
+  const weightComparisonPresentation = buildWeightComparisonPresentation(report.bodyCompositionGoal, report.idealWeightRange);
+  const metabolicRiskPresentation = buildMetabolicRiskPresentation(
+    report.metabolicRisk,
+    report.bmi.value,
+    report.waistCm,
+    report.waistHipRatio.value,
+    report.visceralFat.level,
+  );
+  const evolutionProjectionPresentation = buildEvolutionProjectionPresentation(report.evolutionProjection, report.bodyCompositionGoal);
+  const evolutionHistoryPresentation = buildEvolutionHistoryPresentation(reports);
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -93,6 +124,11 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
         <BodyCompositionGoalCard metric={bodyCompositionGoalPresentation} />
         <MuscleGoalCard metric={muscleGoalPresentation} />
         <MetricCard metric={bodyWaterPresentation} />
+        <RangeMetricCard metric={idealWeightRangePresentation} />
+        <WeightComparisonCard metric={weightComparisonPresentation} />
+        <MetabolicRiskCard metric={metabolicRiskPresentation} />
+        <EvolutionProjectionCard metric={evolutionProjectionPresentation} />
+        <EvolutionHistoryChart metric={evolutionHistoryPresentation} />
       </div>
     </div>
   );

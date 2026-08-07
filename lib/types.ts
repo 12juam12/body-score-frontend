@@ -222,6 +222,30 @@ export type BodyWater = {
   status: BodyWaterStatus;
 };
 
+export type IdealWeightRange = {
+  minWeightKg: number;
+  maxWeightKg: number;
+};
+
+export const METABOLIC_RISK_LEVELS = ["LOW", "MODERATE", "HIGH"] as const;
+
+export type MetabolicRiskLevel = (typeof METABOLIC_RISK_LEVELS)[number];
+
+export type MetabolicRisk = {
+  bmiScore: number;
+  waistScore: number;
+  waistHipRatioScore: number;
+  visceralFatScore: number;
+  totalScore: number;
+  level: MetabolicRiskLevel;
+};
+
+export type EvolutionProjection = {
+  weightDifferenceKg: number;
+  weeklyRateKg: number;
+  estimatedWeeks: number;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -248,4 +272,7 @@ export type PatientReport = {
   bodyCompositionGoal: BodyCompositionGoal;
   muscleGoal: MuscleGoal;
   bodyWater: BodyWater;
+  idealWeightRange: IdealWeightRange;
+  metabolicRisk: MetabolicRisk;
+  evolutionProjection: EvolutionProjection;
 };

@@ -102,6 +102,93 @@ export type MuscleGoalPresentation = {
   tooltip: string;
 };
 
+export type WeightComparisonStat = {
+  label: string;
+  value: string;
+};
+
+export type WeightComparisonPoint = {
+  value: number;
+  label: string;
+  color: string;
+};
+
+export type WeightComparisonRow = {
+  method: string;
+  result: string;
+};
+
+export type WeightComparisonPresentation = {
+  title: string;
+  stats: WeightComparisonStat[];
+  points: WeightComparisonPoint[];
+  scaleMin: number;
+  scaleMax: number;
+  explanation: string;
+  caseMessage: string;
+  comparisonRows: WeightComparisonRow[];
+  tooltip: string;
+};
+
+export type MetabolicRiskScoreRow = {
+  label: string;
+  value: string;
+  score: number;
+};
+
+export type MetabolicRiskPresentation = {
+  title: string;
+  statusLabel: string;
+  color: string;
+  totalScore: number;
+  maxScore: number;
+  zones: MetricZone[];
+  scaleMin: number;
+  scaleMax: number;
+  scoreRows: MetabolicRiskScoreRow[];
+  interpretation: string;
+  recommendation: string;
+  technicalDetails: MetricTechnicalDetail[];
+  tooltip: string;
+};
+
+export type EvolutionTimeEstimate = {
+  primary: string;
+  secondary: string | null;
+};
+
+export type EvolutionProjectionPresentation = {
+  title: string;
+  currentWeightKg: number;
+  targetWeightKg: number;
+  differenceLabel: string;
+  hasEstimate: boolean;
+  estimate: EvolutionTimeEstimate | null;
+  caseMessage: string;
+  interpretation: string;
+  motivationalMessage: string;
+  tooltip: string;
+};
+
+export type EvolutionHistoryPoint = {
+  date: string;
+  value: number;
+};
+
+export type EvolutionHistorySeries = {
+  key: string;
+  label: string;
+  color: string;
+  unit: string;
+  points: EvolutionHistoryPoint[];
+};
+
+export type EvolutionHistoryPresentation = {
+  hasHistory: boolean;
+  series: EvolutionHistorySeries[];
+  emptyMessage: string;
+};
+
 export type MetricRangePresentation = {
   title: string;
   subtitle?: string;
