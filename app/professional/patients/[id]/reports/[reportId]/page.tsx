@@ -11,6 +11,7 @@ import { buildBasalMetabolicRatePresentation } from "@/lib/metrics/basalMetaboli
 import { buildVisceralFatPresentation } from "@/lib/metrics/visceralFat";
 import { buildBodyCompositionGoalPresentation } from "@/lib/metrics/bodyCompositionGoal";
 import { buildMuscleGoalPresentation } from "@/lib/metrics/muscleGoal";
+import { buildBodyWaterPresentation } from "@/lib/metrics/bodyWater";
 import { MetricCard } from "@/components/reports/MetricCard";
 import { RangeMetricCard } from "@/components/reports/RangeMetricCard";
 import { CompositionMetricCard } from "@/components/reports/CompositionMetricCard";
@@ -67,6 +68,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
   const visceralFatPresentation = buildVisceralFatPresentation(report.visceralFat);
   const bodyCompositionGoalPresentation = buildBodyCompositionGoalPresentation(report.bodyCompositionGoal);
   const muscleGoalPresentation = buildMuscleGoalPresentation(report.muscleGoal, report.fatFreeMass.valueKg);
+  const bodyWaterPresentation = buildBodyWaterPresentation(report.bodyWater);
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -90,6 +92,7 @@ export default async function PatientReportDetailPage({ params }: PatientReportD
         <MetricCard metric={visceralFatPresentation} />
         <BodyCompositionGoalCard metric={bodyCompositionGoalPresentation} />
         <MuscleGoalCard metric={muscleGoalPresentation} />
+        <MetricCard metric={bodyWaterPresentation} />
       </div>
     </div>
   );

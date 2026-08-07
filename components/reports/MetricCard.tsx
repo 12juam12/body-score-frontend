@@ -24,6 +24,7 @@ export function MetricCard({ metric }: MetricCardProps) {
           <p className="mt-1 text-2xl font-semibold text-foreground">
             {metric.value} <span className="text-sm font-normal text-muted">{metric.unit}</span>
           </p>
+          {metric.subtitle ? <p className="text-xs text-muted">{metric.subtitle}</p> : null}
         </div>
         {metric.categoryLabel && metric.color ? (
           <span
@@ -41,7 +42,7 @@ export function MetricCard({ metric }: MetricCardProps) {
             zones={metric.zones}
             scaleMin={metric.scaleMin}
             scaleMax={metric.scaleMax}
-            value={metric.value}
+            value={metric.gaugeValue ?? metric.value}
             smooth={metric.gaugeSmooth}
           />
         </div>

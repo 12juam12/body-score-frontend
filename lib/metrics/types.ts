@@ -18,8 +18,10 @@ export type MetricWarning = {
 
 export type MetricPresentation = {
   title: string;
+  subtitle?: string;
   unit: string;
   value: number;
+  gaugeValue?: number;
   categoryLabel?: string;
   color?: string;
   zones?: MetricZone[];

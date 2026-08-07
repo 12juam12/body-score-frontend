@@ -210,6 +210,18 @@ export type MuscleGoal = {
   status: MuscleGoalStatus;
 };
 
+export const BODY_WATER_STATUSES = ["VERY_LOW", "SLIGHTLY_LOW", "NORMAL", "HIGH"] as const;
+
+export type BodyWaterStatus = (typeof BODY_WATER_STATUSES)[number];
+
+export type BodyWater = {
+  volumeLiters: number;
+  percentage: number;
+  minPercentage: number;
+  maxPercentage: number;
+  status: BodyWaterStatus;
+};
+
 export type PatientReport = {
   id: number;
   patientId: number;
@@ -235,4 +247,5 @@ export type PatientReport = {
   visceralFat: VisceralFat;
   bodyCompositionGoal: BodyCompositionGoal;
   muscleGoal: MuscleGoal;
+  bodyWater: BodyWater;
 };
